@@ -67,7 +67,7 @@ def queryByVoice():  # 음성으로 질문하고 텍스트로 대답 받기
 
 def main():
 	queryByVoice()
-	time.sleep(0.5)  # 0.5초내로 입력받지 않으면 종료되는 것 같습니다.
+	time.sleep(0.5)  # 0.5초간 프로세스 중지
 
 if __name__ == '__main__':
 	main()
