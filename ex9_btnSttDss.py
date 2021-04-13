@@ -7,28 +7,30 @@ Example 9: 버튼 음성인식 대화 결합 예제
 """
 
 from __future__ import print_function
-import ex1_kwstest as kws
-import ex4_getText2VoiceStream as tts
-import ex6_queryVoice as dss
+import ex1_kwstest as kws  # 호출어 인식
+import ex4_getText2VoiceStream as tts  #TTS + 음성 출력
+import ex6_queryVoice as dss  # 음성 대화
 import MicrophoneStream as MS
 import time
 	
 def main():
 	#Example8 Button+STT+DSS
+	# 버튼을 눌러서 대화하기
+	
 	KWSID = ['기가지니', '지니야', '친구야', '자기야']
 	while 1:
-		recog = kws.btn_test(KWSID[0])
+		recog = kws.btn_test(KWSID[0])  # 버튼으로 기가지니 호출
 		if recog == 200:
 			print('KWS Dectected ...\n Start STT...')
-			text = dss.queryByVoice()
-			tts_result = tts.getText2VoiceStream(text, "result_mesg.wav")
+			text = dss.queryByVoice()  # 음성으로 질문하고 텍스트로 대답받기
+			tts_result = tts.getText2VoiceStream(text, "result_mesg.wav")  # 대답받은 텍스트를 result_mesg.wav라는 이름의 음성파일로 저장
 			if text == '':
 				print('질의한 내용이 없습니다.')
 			elif tts_result == 500:
 				print("TTS 동작 에러입니다.\n")
 				break
 			else:
-				MS.play_file("result_mesg.wav")
+				MS.play_file("result_mesg.wav")  # 생성된 result_msg.wav file을 읽어줌(음성으로 출력해줌)
 			time.sleep(2)
 		else:
 			print('KWS Not Dectected ...')
