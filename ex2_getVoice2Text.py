@@ -67,7 +67,7 @@ def getVoice2Text():
 
 def main():
     # Sound To Text(STT)
-    text = getVoice2Text()  # 인식된 음성을 텍스트로 바꾸어 출력, 음성인식은 100글자 이하만 가능
+    text = getVoice2Text()  # 인식된 음성을 텍스트로 바꾸어서 text라는 변수에 리턴, 음성인식은 100글자 이하만 가능
 
 if __name__ == '__main__':
     main()
