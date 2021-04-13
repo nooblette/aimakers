@@ -45,8 +45,7 @@ def main():
 
 	# Dialog : queryByText
 	queryByText("안녕")  # 질의어를 quertByText함수로 전달, 이떄의 질의어는 '안녕'
-	# ex2_getVoice2Text.py를 이용해 음성으로 질문을 입력하고 텍스트로 변환한 후,
-	# 현재파일의 queryByText 함수를 통해 변환한 텍스트를 전달하여 대답을 출력하면 될 것 같습니다.
+
 
 if __name__ == '__main__':
 	main()
