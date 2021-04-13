@@ -33,7 +33,7 @@ def main():
 				break
 			else:
 				MS.play_file("result_mesg.wav")	 # 답변받은 텍스트로 만든 음성파일을 읽어서 음성으로 질문의 결과를 출력	
-			time.sleep(2)
+			time.sleep(2)  # 2초간 프로세스 중지
 		else:
 			print('KWS Not Dectected ...')
 
