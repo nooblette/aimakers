@@ -34,9 +34,9 @@ def generate_request():  # 마이크에서 가져온 데이터를 기가지니 S
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		audio_generator = stream.generator()
 		messageReq = gigagenieRPC_pb2.reqQueryVoice()
-		messageReq.reqOptions.lang=0
-		messageReq.reqOptions.userSession="1234"  # 질의어의 문맥 정보
-		messageReq.reqOptions.deviceId="aklsjdnalksd"  # 해당 ai 스피커의 정보
+		messageReq.reqOptions.lang=0  # 질문할 음성이 한국어이므로 0으로 설정
+		messageReq.reqOptions.userSession="1234"  # 질의의 문맥을 유지할때 필요한 값으로 문맥에 따라 다르게 설정(코드로 보면 이해가 잘 안돼서 실제로 실행시켜봐야 알 것 같음)
+		messageReq.reqOptions.deviceId="aklsjdnalksd"  # 해당 AI스피커의 정보, 디바이스에 따라 다르게 설정(보통 MAC주소로 설정)
 		yield messageReq
 		for content in audio_generator:
 			message = gigagenieRPC_pb2.reqQueryVoice()
@@ -50,7 +50,10 @@ def queryByVoice():  # 음성으로 질문하고 텍스트로 대답 받기
 	stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
 	request = generate_request()  # 음성으로 입력한 질의어를 기가지니 STT API에 입력할 수 있도록 변환
 	resultText = ''
-	response = stub.queryByVoice(request)  # API에 입력할수 있도록 변환한 음성 질의어를 queryByVoice함수에 입력, 대답을 텍스트로 리턴받음
+	response = stub.queryByVoice(request)  
+	# API에 입력할수 있도록 변환한 음성 질의어를 queryByVoice함수에 입력, 대답을 텍스트로 리턴받음
+	# 음성으로 입력한 질의어로 query API에 질문을 입력
+	
 	if response.resultCd == 200:
 		print("질의 내용: %s" % (response.uword))  # 질의내용을 출력하고
 		for a in response.action:
