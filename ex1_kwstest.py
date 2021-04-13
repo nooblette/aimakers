@@ -27,6 +27,7 @@ def callback(channel):
 	print(btn_status)
 
 GPIO.add_event_detect(29, GPIO.FALLING, callback=callback, bouncetime=10)
+# line 17~29 : GPIO 설정 부분, 버튼의 LED초기 설정과 버튼이 눌러졌을때 동작 처리
 
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
 def py_error_handler(filename, line, function, err, fmt):
@@ -36,7 +37,7 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 
-def detect():
+def detect():  # 마이크에서 들어오는 데이터를 호출어 인식하는 모듈을 사용하여 동작
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		audio_generator = stream.generator()
 
@@ -46,11 +47,11 @@ def detect():
 			rms = audioop.rms(content,2)
 			#print('audio rms = %d' % (rms))
 
-			if (rc == 1):
-				MS.play_file("../data/sample_sound.wav")
+			if (rc == 1):  # 호출어가 인식되면
+				MS.play_file("../data/sample_sound.wav")  # '띠리링'소리를 출력
 				return 200
 
-def btn_detect():
+def btn_detect():  # 버튼이 눌리는 것을 처리
 	global btn_status
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		audio_generator = stream.generator()
@@ -61,17 +62,17 @@ def btn_detect():
 			rms = audioop.rms(content,2)
 			#print('audio rms = %d' % (rms))
 			GPIO.output(31, GPIO.LOW)
-			if (btn_status == True):
-				rc = 1
+			if (btn_status == True):  # 버튼이 눌러진것이 확인되면
+				rc = 1  # rc를 1로
 				btn_status = False			
-			if (rc == 1):
+			if (rc == 1):  # rc값이 1이면 버튼이 눌러진것이므로
 				GPIO.output(31, GPIO.HIGH)
-				MS.play_file("../data/sample_sound.wav")
+				MS.play_file("../data/sample_sound.wav")  # '띠리링'소리를 출력
 				return 200
 
-def test(key_word = '기가지니'):
+def test(key_word = '기가지니'):  # 마이크로 호출어를 인식하는 함수, 기가지니, 지니야, 친구야의 호출어를 지정 할 수 있음
 	rc = ktkws.init("../data/kwsmodel.pack")
-	print ('init rc = %d' % (rc))
+	print ('init rc = %d' % (rc))  # 진행사항을 출력
 	rc = ktkws.start()
 	print ('start rc = %d' % (rc))
 	print ('\n호출어를 불러보세요~\n')
@@ -82,7 +83,7 @@ def test(key_word = '기가지니'):
 	ktkws.stop()
 	return rc
 
-def btn_test(key_word = '기가지니'):
+def btn_test(key_word = '기가지니'):  # 버튼을 인식해서 진행
 	global btn_status
 	rc = ktkws.init("../data/kwsmodel.pack")
 	print ('init rc = %d' % (rc))
@@ -97,7 +98,8 @@ def btn_test(key_word = '기가지니'):
 	return rc
 
 def main():
-	test()
+	test()  # 음성호출
+	#btn_test()  # 버튼호출
 
 if __name__ == '__main__':
 	main()
