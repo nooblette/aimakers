@@ -46,6 +46,5 @@ def main():
 	# Dialog : queryByText
 	queryByText("안녕")  # 질의어를 quertByText함수로 전달, 이떄의 질의어는 '안녕'
 
-
 if __name__ == '__main__':
 	main()
