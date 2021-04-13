@@ -15,17 +15,17 @@ HOST = 'gate.gigagenie.ai'
 PORT = 4080
 
 # DIALOG : queryByText
-def queryByText(text):
+def queryByText(text):  # 질문한 텍스트 대한 대답을 텍스트로 받음
 
 	channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
 	stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
 
 	message = gigagenieRPC_pb2.reqQueryText()
-	message.queryText = text
-	message.userSession = "1234"
-	message.deviceId = "yourdevice"
+	message.queryText = text  # 질문할 텍스트
+	message.userSession = "1234"  # 질의의 문맥을 유지할때 필요한 값으로 문맥에 따라 다르게 설정(코드로 보면 이해가 잘 안돼서 실제로 실행시켜봐야 알 것 같음)
+	message.deviceId = "yourdevice"  # 해당 AI스피커의 정보, 디바이스에 따라 다르게 설정(보통 MAC주소로 설정)
 		
-	response = stub.queryByText(message)
+	response = stub.queryByText(message)  # 입력한 질의어로 query API에 질문을 입력
 
 	print ("\n\nresultCd: %d" % (response.resultCd))
 	if response.resultCd == 200:
@@ -44,7 +44,9 @@ def queryByText(text):
 def main():
 
 	# Dialog : queryByText
-	queryByText("안녕")
+	queryByText("안녕")  # 질의어를 quertByText함수로 전달, 이떄의 질의어는 '안녕'
+	# ex2_getVoice2Text.py를 이용해 음성으로 질문을 입력하고 텍스트로 변환한 후,
+	# 현재파일의 queryByText 함수를 통해 변환한 텍스트를 전달하여 대답을 출력하면 될 것 같습니다.
 
 if __name__ == '__main__':
 	main()
