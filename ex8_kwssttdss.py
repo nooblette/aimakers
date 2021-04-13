@@ -32,7 +32,7 @@ def main():
 				print("TTS 동작 에러입니다.\n\n\n")
 				break
 			else:
-				MS.play_file("result_mesg.wav")			
+				MS.play_file("result_mesg.wav")	 # 답변받은 텍스트로 만든 음성파일을 읽어서 음성으로 질문의 결과를 출력	
 			time.sleep(2)
 		else:
 			print('KWS Not Dectected ...')
