@@ -30,13 +30,13 @@ c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
-def generate_request():
+def generate_request():  # 마이크에서 가져온 데이터를 기가지니 STT API에 입력할수있도록 변환하는 함수
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
 		audio_generator = stream.generator()
 		messageReq = gigagenieRPC_pb2.reqQueryVoice()
 		messageReq.reqOptions.lang=0
-		messageReq.reqOptions.userSession="1234"
-		messageReq.reqOptions.deviceId="aklsjdnalksd"
+		messageReq.reqOptions.userSession="1234"  # 질의어의 문맥 정보
+		messageReq.reqOptions.deviceId="aklsjdnalksd"  # 해당 ai 스피커의 정보
 		yield messageReq
 		for content in audio_generator:
 			message = gigagenieRPC_pb2.reqQueryVoice()
@@ -44,21 +44,21 @@ def generate_request():
 			yield message
 			rms = audioop.rms(content,2)
 
-def queryByVoice():
+def queryByVoice():  # 음성으로 질문하고 텍스트로 대답 받기
 	print ("\n\n\n질의할 내용을 말씀해 보세요.\n\n듣고 있는 중......\n")
 	channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
 	stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
-	request = generate_request()
+	request = generate_request()  # 음성으로 입력한 질의어를 기가지니 STT API에 입력할 수 있도록 변환
 	resultText = ''
-	response = stub.queryByVoice(request)
+	response = stub.queryByVoice(request)  # API에 입력할수 있도록 변환한 음성 질의어를 queryByVoice함수에 입력, 대답을 텍스트로 리턴받음
 	if response.resultCd == 200:
-		print("질의 내용: %s" % (response.uword))
+		print("질의 내용: %s" % (response.uword))  # 질의내용을 출력하고
 		for a in response.action:
 			response = a.mesg
-			parsing_resp = response.replace('<![CDATA[', '')
-			parsing_resp = parsing_resp.replace(']]>', '')
-			resultText = parsing_resp
-			print("\n질의에 대한 답변: " + parsing_resp +'\n\n\n')
+			parsing_resp = response.replace('<![CDATA[', '')  # 출력할때 필요없는 부분을 제거
+			parsing_resp = parsing_resp.replace(']]>', '')  # 위와 마찬가지
+			resultText = parsing_resp  # 답변받은 내용을 전달 받고
+			print("\n질의에 대한 답변: " + parsing_resp +'\n\n\n')  # 답변을 출력
 
 	else:
 		print("\n\nresultCd: %d\n" % (response.resultCd))
@@ -67,7 +67,7 @@ def queryByVoice():
 
 def main():
 	queryByVoice()
-	time.sleep(0.5)
+	time.sleep(0.5)  # 0.5초내로 입력받지 않으면 종료되는 것 같습니다.
 
 if __name__ == '__main__':
 	main()
