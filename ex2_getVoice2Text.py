@@ -27,27 +27,27 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 def generate_request():  # 마이크에서 가져온 데이터를 기가지니 STT API에 입력할 수 있도록 변환 (API호출은 하루 최대 500건)
-    with MS.MicrophoneStream(RATE, CHUNK) as stream:
-        audio_generator = stream.generator()
+    with MS.MicrophoneStream(RATE, CHUNK) as stream:  # 예제 1 참고
+        audio_generator = stream.generator()  # iterator Object 생성
     
         for content in audio_generator:
-            message = gigagenieRPC_pb2.reqVoice()
+            message = gigagenieRPC_pb2.reqVoice()  # gigagenieRPC_pb2 파일에 reqVoice함수가 왜 없지..?
             message.audioContent = content
-            yield message
+            yield message  # iterator yield
             
             rms = audioop.rms(content,2)
             #print_rms(rms)
 
 def getVoice2Text():	
     print ("\n\n음성인식을 시작합니다.\n\n종료하시려면 Ctrl+\ 키를 누루세요.\n\n\n")
-    channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
+    channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())  # 이것도 GRPC 모듈을 봐야 알 것 같음, port 번호로 서버 연결 설정부분이라 추측
     stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
     # line 43,44 : user_auth.py 파일에서 입력한 client id,ket,secret(사용자의 인증 API키)를 받아서 GRPC 패키지를 사용
     # GRPC -> 라즈베리파이와 서버가 통신하기위해 사용하는 프로토콜, 인증된 API 모듈로 STT, TTS, Query 사용가능
     
-    request = generate_request()
+    request = generate_request()  # iterable
     resultText = ''
-    for response in stub.getVoice2Text(request):
+    for response in stub.getVoice2Text(request):  # iterator로 하나씩
         if response.resultCd == 200: # partial, 계속 인식될 때
             print('resultCd=%d | recognizedText= %s'
                   % (response.resultCd, response.recognizedText))
