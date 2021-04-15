@@ -27,7 +27,7 @@ asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
 def generate_request():  # 마이크에서 가져온 데이터를 기가지니 STT API에 입력할 수 있도록 변환 (API호출은 하루 최대 500건)
-    with MS.MicrophoneStream(RATE, CHUNK) as stream:  # 예제 1 참고
+    with MS.MicrophoneStream(RATE, CHUNK) as stream:  # 예제1 참고
         audio_generator = stream.generator()  # iterator Object 생성
     
         for content in audio_generator:
