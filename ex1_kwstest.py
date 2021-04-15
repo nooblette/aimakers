@@ -38,12 +38,11 @@ asound.snd_lib_error_set_handler(c_error_handler)
 
 
 def detect():  # 마이크에서 들어오는 데이터를 호출어 인식하는 모듈을 사용하여 동작
-	with MS.MicrophoneStream(RATE, CHUNK) as stream:
-		audio_generator = stream.generator()
+	with MS.MicrophoneStream(RATE, CHUNK) as stream:  # MicroStream클래스를 통해 rate와 chunk처리, stream이라는 객체 생성
+		audio_generator = stream.generator()  # stream은 iterator Object(값을 차례대로 꺼낼 수 있음)
 
-		for content in audio_generator:
-
-			rc = ktkws.detect(content)
+		for content in audio_generator:  # iterator로 반복
+			rc = ktkws.detect(content)  # ktkws 모듈을 봐야 알 것 같은데 아마 내용을 인식하면 ktkws의 detect 함수가 1을 리턴
 			rms = audioop.rms(content,2)
 			#print('audio rms = %d' % (rms))
 
@@ -53,11 +52,11 @@ def detect():  # 마이크에서 들어오는 데이터를 호출어 인식하�
 
 def btn_detect():  # 버튼이 눌리는 것을 처리
 	global btn_status
-	with MS.MicrophoneStream(RATE, CHUNK) as stream:
-		audio_generator = stream.generator()
+	with MS.MicrophoneStream(RATE, CHUNK) as stream:  # MicroStream클래스를 통해 rate와 chunk처리, stream이라는 객체 생성
+		audio_generator = stream.generator()  # stream은 iterator Object(값을 차례대로 꺼낼 수 있음)
 
 		for content in audio_generator:
-			GPIO.output(31, GPIO.HIGH)
+			GPIO.output(31, GPIO.HIGH)  # GPIO(버튼설정)
 			rc = ktkws.detect(content)
 			rms = audioop.rms(content,2)
 			#print('audio rms = %d' % (rms))
@@ -77,7 +76,7 @@ def test(key_word = '기가지니'):  # 마이크로 호출어를 인식하는 �
 	print ('start rc = %d' % (rc))
 	print ('\n호출어를 불러보세요~\n')
 	ktkws.set_keyword(KWSID.index(key_word))
-	rc = detect()
+	rc = detect()  # 호출어가 제대로 인식되었으면 200을 
 	print ('detect rc = %d' % (rc))
 	print ('\n\n호출어가 정상적으로 인식되었습니다.\n\n')
 	ktkws.stop()
