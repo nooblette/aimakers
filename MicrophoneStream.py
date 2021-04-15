@@ -84,6 +84,11 @@ class MicrophoneStream(object):
 			yield b''.join(data)  # 함수 안에서 yield를 사용하면 함수는 Generator가 되며 yield에는 값(변수)을 지정합니다.
 			'''
 			ex)
+			def number_generator{
+			yield 0
+			yield 1
+			yield 2
+			}
 			generator 함수 number_generator를 실행하면
 			for i in number_generator(): print(i) 는
 			0
