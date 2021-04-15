@@ -19,7 +19,7 @@ def main():  # ex1과 ex2를 합침, 호출어를 사용하여 AMK를 호출하�
 
 	KWSID = ['기가지니', '지니야', '친구야', '자기야']
 	while 1:
-		recog=kws.test(KWSID[0])  # 
+		recog=kws.test(KWSID[0])  # '기가지니'
 		if recog == 200:
 			print('KWS Dectected ...\n Start STT...')
 			text = gv2t.getVoice2Text()  # 음성으로 입력받은 데이터를 텍스트로 변환해서 리턴
