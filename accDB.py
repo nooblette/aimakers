@@ -8,13 +8,14 @@ import time
 import pymysql
 import pandas as pd
 import csv
+import RDSinfo
 
 # RDS info
-host = "readingbird.coyhhlfg38do.ap-northeast-2.rds.amazonaws.com"
-port = 3306  # port number is fix to 3306
-username = "root"
-database = "ReadingBird"
-password = "12345678"
+host = RDSinfo.getHost()
+port = RDSinfo.getPort()
+username = RDSinfo.getUsername()
+database = RDSinfo.getDatabase()
+password = RDSinfo.getPassword()
 
 
 def connect_RDS(host, port, username, password, database):  # DB와 연결
@@ -118,3 +119,5 @@ def delete_data():
     conn.commit()
 
     conn.close()
+
+read_data()
