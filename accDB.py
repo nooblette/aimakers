@@ -63,7 +63,6 @@ def create_table():  # crate Table
     FOREIGN KEY (bid, qid, stage) REFERENCES Quiz_Question(bid, qid, stage)
     )
     '''
-
     sql1 = '''
     CREATE TABLE Book (
     bid int,
@@ -142,7 +141,7 @@ def create_table():  # crate Table
     )
     '''
 
-    cursor.execute(sql7)  # 작성한 sql 문을 실행
+    cursor.execute(sql)  # 작성한 sql 문을 실행
 
     conn.commit()  # commit 을 날림으로서, execute() 한 결과를 DB에 반영
     print("Query Success!")
@@ -248,4 +247,24 @@ def delete_data():
     cursor.execute(sql, ("1"))
     conn.commit()
 
+    conn.close()
+
+
+# quiz answer 삽입
+def insert_quiz_answer(bid, qid, stage, answer, correct):
+    conn, cursor = connect_RDS(host, port, username, password, database)
+    sql = "INSERT INTO Quiz_Answer VALUES (%s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (bid, qid, stage, answer, datetime.now(), correct))
+
+    conn.commit()
+    conn.close()
+
+
+# book report 삽입
+def insert_book_report(bid, contents):
+    conn, cursor = connect_RDS(host, port, username, password, database)
+    sql = "INSERT INTO Report_Subject VALUES (%s, %s, %s)"
+    cursor.execute(sql, (bid, contents, datetime.now()))
+
+    conn.commit()
     conn.close()
