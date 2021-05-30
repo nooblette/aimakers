@@ -1,1 +1,1 @@
-# hostname -I\n
+https://www.findip.kr/
