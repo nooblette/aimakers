@@ -3,7 +3,7 @@ import TTS
 import pygametest as pygame
 from collections import defaultdict
 import accDB
-import pygameForScriptTS as BOOK
+#import pygameForScriptTS as BOOK
 import detect
 import random
 
@@ -18,22 +18,32 @@ mp_english = defaultdict(list)
 
 
 def init_feeling_Qlist():
-    feeling_Qlist[0] = [accDB.select_question(0, 1, 0, 0)[0], accDB.select_question(0, 1, 0, 1)[0]]
-    mp_feeling[0] = [accDB.select_question(0, 1, 0, 0)[1].split(','), accDB.select_question(0, 1, 0, 1)[1].split(',')]
+    feeling_Qlist[0].append(accDB.select_question(0, 1, 0, 0)[0])
+    feeling_Qlist[0].append(accDB.select_question(0, 1, 0, 1)[0])
+    mp_feeling[0].append(accDB.select_question(0, 1, 0, 0)[1].split(','))
+    mp_feeling[0].append(accDB.select_question(0, 1, 0, 1)[1].split(','))
 
-    feeling_Qlist[1] = [accDB.select_question(0, 1, 1, 0)[0], accDB.select_question(0, 1, 1, 1)[0]]
-    mp_feeling[1] = [accDB.select_question(0, 1, 1, 0)[1].split(','), accDB.select_question(0, 1, 1, 1)[1].split(',')]
+    feeling_Qlist[1].append(accDB.select_question(0, 1, 1, 0)[0])
+    feeling_Qlist[1].append(accDB.select_question(0, 1, 1, 1)[0])
+    mp_feeling[1].append(accDB.select_question(0, 1, 1, 0)[1].split(','))
+    mp_feeling[1].append(accDB.select_question(0, 1, 1, 1)[1].split(','))
 
-    feeling_Qlist[2] = [accDB.select_question(0, 1, 2, 0)[0], accDB.select_question(0, 1, 2, 1)[0]]
-    mp_feeling[2] = [accDB.select_question(0, 1, 2, 0)[1].split(','), accDB.select_question(0, 1, 2, 1)[1].split(',')]
+    feeling_Qlist[2].append(accDB.select_question(0, 1, 2, 0)[0])
+    feeling_Qlist[2].append(accDB.select_question(0, 1, 2, 1)[0])
+    mp_feeling[2].append(accDB.select_question(0, 1, 2, 0)[1].split(','))
+    mp_feeling[2].append(accDB.select_question(0, 1, 2, 1)[1].split(','))
 
-    feeling_Qlist[3] = [accDB.select_question(0, 1, 3, 0)[0], accDB.select_question(0, 1, 3, 1)[0]]
-    mp_feeling[3] = [accDB.select_question(0, 1, 3, 0)[1].split(','), accDB.select_question(0, 1, 3, 1)[1].split(',')]
+    feeling_Qlist[3].append(accDB.select_question(0, 1, 3, 0)[0])
+    feeling_Qlist[3].append(accDB.select_question(0, 1, 3, 1)[0])
+    mp_feeling[3].append(accDB.select_question(0, 1, 3, 0)[1].split(','))
+    mp_feeling[3].append(accDB.select_question(0, 1, 3, 1)[1].split(','))
 
-    feeling_Qlist[4] = [accDB.select_question(0, 1, 4, 0)[0], accDB.select_question(0, 1, 4, 1)[0]]
-    mp_feeling[4] = [accDB.select_question(0, 1, 4, 0)[1].split(','), accDB.select_question(0, 1, 4, 1)[1].split(',')]
+    feeling_Qlist[4].append(accDB.select_question(0, 1, 4, 0)[0])
+    feeling_Qlist[4].append(accDB.select_question(0, 1, 4, 1)[0])
+    mp_feeling[4].append(accDB.select_question(0, 1, 4, 0)[1].split(','))
+    mp_feeling[4].append(accDB.select_question(0, 1, 4, 1)[1].split(','))
 
-
+'''
 # (cid, bid, qid, stage)
 def init_contents_Qlist():
     contents_Qlist[0] = [accDB.select_question(1, 1, 0, 0)[0], accDB.select_question(1, 1, 0, 1)[0]]
@@ -161,6 +171,7 @@ def quiz():
             continue
 
     '''
+'''
     for key, qlist in feeling_Qlist.items():
         if print_q(key, qlist, 'f') == False:
             continue  # pass to next question
@@ -170,9 +181,10 @@ def quiz():
             continue
     '''
 
-
+'''
 def book_report():
     pygame.play_text("느낀점을 한줄로 말해줘.mp3")  # 미리 mp3 파일로 저장해놓기
     contents = STT.main()
     print(contents)  # for check
     accDB.insert_book_report(1, contents)
+'''

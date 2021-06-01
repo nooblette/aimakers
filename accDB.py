@@ -51,37 +51,25 @@ def create_database():  # create DataBase
 def create_table():  # crate Table
     conn, cursor = connect_RDS(host, port, username, password, database)
 
-    sql = '''
-    CREATE TABLE Quiz_Answer (
-    bid int, 
-    qid int,
-    stage int,
-    answer text,
-    create_date datetime,
-    correct tinyint,
-    PRIMARY KEY (bid, qid, stage),
-    FOREIGN KEY (bid, qid, stage) REFERENCES Quiz_Question(bid, qid, stage)
-    )
+    sql = \
     '''
-    sql1 = '''
+    '''
+
+    # sql 1~7
+    '''
     CREATE TABLE Book (
     bid int,
     bname varchar(255),
     PRIMARY KEY (bid)
-    )
-    '''
+    );
 
-    sql2 = '''
     CREATE TABLE Report_Subject (
     bid int,
     contents text,
     create_date datetime,
-    PRIMARY KEY (bid),
-    FOREIGN KEY (bid) REFERENCES Book(bid)
-    )
-    '''
+    PRIMARY KEY (bid)
+    );
 
-    sql3 = '''
     CREATE TABLE Quiz_Question (
     cid int,
     bid int,
@@ -89,12 +77,9 @@ def create_table():  # crate Table
     stage int,
     question text,
     mp varchar(255),
-    PRIMARY KEY (cid, bid, qid, stage),
-    FOREIGN KEY (bid) REFERENCES Book(bid)
-    )
-    '''
+    PRIMARY KEY (cid, bid, qid, stage)
+    );
 
-    sql4 = '''
     CREATE TABLE Quiz_Answer (
     cid int,
     bid int,
@@ -103,32 +88,24 @@ def create_table():  # crate Table
     answer text,
     create_date datetime,
     correct tinyint,
-    PRIMARY KEY (cid, bid, qid, stage),
-    FOREIGN KEY (bid, cid, qid, stage) REFERENCES Quiz_Question(bid, cid, qid, stage)
-    )
-    '''
+    PRIMARY KEY (create_date)
+    );
 
-    sql5 = '''
     CREATE TABLE Freetalk_Subject (
     sid int,
     situation varchar(255),
     PRIMARY KEY (sid)
-    )
-    '''
+    );
 
-    sql6 = '''
     CREATE TABLE Freetalk_Speaker_Speech (
     sid int,
     pid int,
     stage int,
     speech text,
     mp varchar(255),
-    PRIMARY KEY (sid, pid, stage),
-    FOREIGN KEY (sid) REFERENCES Freetalk_Subject(sid)
-    )
-    '''
+    PRIMARY KEY (sid, pid, stage)
+    );
 
-    sql7 = '''
     CREATE TABLE Freetalk_User_Speech (
     sid int,
     pid int,
@@ -136,8 +113,7 @@ def create_table():  # crate Table
     answer text,
     create_date datetime,
     correct int,
-    PRIMARY KEY (sid, pid, stage),
-    FOREIGN KEY (sid, pid, stage) REFERENCES Freetalk_Speaker_Speech(sid, pid, stage)
+    PRIMARY KEY (create_date)
     )
     '''
 
