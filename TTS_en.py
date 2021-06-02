@@ -27,7 +27,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"/home/pi/Downloads/ai-speaker-e
 
 # sentence = input("말하고 싶은 텍스트를 입력하세요")
 
-def stt(sentence, linenum):
+def tts(sentence):
     # [START tts_quickstart]
     """Synthesizes speech from the input string of text or ssml.
 
@@ -41,19 +41,15 @@ def stt(sentence, linenum):
 
     # Set the text input to be synthesized
     synthesis_input = texttospeech.SynthesisInput(text=sentence)
+    # synthesis_input = texttospeech.SynthesisInput(text=sentence)
     
     # Build the voice request, select the language code ("en-US") and the ssml
     # voice gender ("neutral")
-    if linenum == 1:
-        voice = texttospeech.VoiceSelectionParams(
-            # language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
-            language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.MALE
-        )
-    else:
-        voice = texttospeech.VoiceSelectionParams(
-            # language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.FEMALE
-			language_code="ko-KR", ssml_gender=texttospeech.SsmlVoiceGender.FEMALE
-       )
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+        # language_code="ko-KR", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+    )
+
     # Select the type of audio file you want returned
     audio_config = texttospeech.AudioConfig(
         audio_encoding=texttospeech.AudioEncoding.MP3
@@ -66,20 +62,9 @@ def stt(sentence, linenum):
     )
 
     # The response's audio_content is binary.
-    filename = "The_Little_Matchgirl_Line" + str(linenum) + "_kr.mp3"
+    filename = "sound.mp3"
     with open(filename, "wb") as out:
         # Write the response to the output file.
         out.write(response.audio_content)
         print('Audio content written to file "',filename,'"')
     # [END tts_quickstart]
-
-if __name__ == "__main__":
-    f = open("The_Little_Matchgirl_Dir/The_Little_Matchgirl_kr", 'r')
-    linenum = 0
-    while True:
-        line = f.readline()
-        linenum += 1
-        if not line: break
-        stt(line, linenum)
-    f.close()
-

@@ -24,4 +24,5 @@ def choose():
         if keyword in answer:
             return
 
-    pygame.play_text("다음에 또 불러줘.mp3")
+    pygame.play_text("call_me_again.mp3")
+

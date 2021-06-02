@@ -7,7 +7,8 @@ import detect
 
 def call():
     speech = STT.main()
-    keywords = ["리딩버드"]
+    print(speech)
+    keywords = ["리", "버"]
     for keyword in keywords:
         if keyword in speech:
             return True
