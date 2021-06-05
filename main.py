@@ -2,18 +2,29 @@ import STT
 import TTS
 import pygametest as pygame
 import reading
-import start
 import interaction
 import time
 
 from  collections import defaultdict
 
 
+def call():
+    try:
+        speech = STT.main()
+        keywords = ["리","버"]
+        for keyword in keywords:
+            if keyword in speech:
+                return True
+            else : return False 
+    except UnboundLocalError:
+        return False
+
+
+
 if __name__ == "__main__":
     while True:
         while True:
-            if start.call():
-                pygame.play_text("새소리.mp3")  # 미리 mp3파일로 저장해놓았다가 출력하는 것만 구현
-                break
-        interaction.choose()
-        time.sleep(5)  # pause 5 second
+            if call():
+                pygame.play_text("birdsong1.mp3")  # 미리 mp3파일로 저장해놓았다가 출력하는 것만 구현
+                interaction.choose()
+            continue
