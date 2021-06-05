@@ -164,7 +164,3 @@ def freetalking():
     for idx in friend_idx:
         if not print_q(idx, friend_Qlist[idx], 'friend'):
             continue
-
-
-
-#freetalking()
