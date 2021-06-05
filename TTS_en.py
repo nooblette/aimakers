@@ -46,7 +46,7 @@ def tts(sentence):
     # Build the voice request, select the language code ("en-US") and the ssml
     # voice gender ("neutral")
     voice = texttospeech.VoiceSelectionParams(
-        language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+        language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.FEMALE
         # language_code="ko-KR", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
     )
 

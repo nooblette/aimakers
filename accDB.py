@@ -189,7 +189,7 @@ def read_data():
 # data 조회
 def select_question(cid, bid, qid, stage):
     conn, cursor = connect_RDS(host, port, username, password, database)
-    sql = "SELECT question, mp FROM Quiz_Question where cid = %s and bid = %s and qid = %s and stage =%s"  # bid 가 %s 인 데이터 가져오기
+    sql = "SELECT question, mp FROM Quiz_Question where cid = %s and bid = %s and qid = %s and stage = %s"  # bid 가 %s 인 데이터 가져오기
 
     cursor.execute(sql, (cid, bid, qid, stage))  # %s 에 해당하는 값은 execute(sql)에서 매개변수로 전달한다.
     # res = cursor.fetchall()  # 해당하는 모든 정보 가져오기
@@ -200,6 +200,17 @@ def select_question(cid, bid, qid, stage):
     
     return res
 
+def select_Freetalk(sid, pid, stage):
+    conn, cursor = connect_RDS(host, port, username, password, database)
+    sql = "SELECT speech, mp FROM Freetalk_Speaker_Speech WHERE sid = %s and pid = %s and stage = %s"
+
+    cursor.execute(sql, (sid, pid, stage))
+    res = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return res
 
 # data 수정
 def update_data():
@@ -229,7 +240,7 @@ def delete_data():
 def insert_quiz_answer(cid, bid, qid, stage, answer, correct):
     conn, cursor = connect_RDS(host, port, username, password, database)
     sql = "INSERT INTO Quiz_Answer VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    cursor.execute(sql, (str(cid), str(bid), str(qid), str(stage), answer, datetime.now(), str(correct)))
+    cursor.execute(sql, (cid, bid, qid, stage, answer, datetime.now(), correct))
 
     conn.commit()
     conn.close()
@@ -243,3 +254,14 @@ def insert_book_report(bid, contents):
 
     conn.commit()
     conn.close()
+
+# freetalk user speech 삽입
+# accDB.insert_Freetalk_Answer(sid, key, idx, answer, 1)
+def insert_Freetalk_Answer(sid, pid, stage, answer, correct):
+    conn, cursor = connect_RDS(host, port, username, password, database)
+    sql = "INSERT INTO Freetalk_User_Speech VALUES (%s, %s, %s, %s, %s, %s)"
+    cursor.execute(sql, (sid, pid, stage, answer, datetime.now(), correct)) 
+
+    conn.commit()
+    conn.close()
+

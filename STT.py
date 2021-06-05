@@ -216,6 +216,3 @@ def stt():
 
 def main():
 	return stt()
-# if __name__ == "__main__":
-#	return stt()
-# [END speech_transcribe_streaming_mic]
