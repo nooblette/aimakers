@@ -1,4 +1,4 @@
-# *Project Name* : **ReadingBird**
+# *Project Name* : **ReadingBird 🕊**
 - 프로젝트 개요 : 캡스톤 경진대회 - 교육용 인공지능 스피커 제작 프로젝트
 - 프로젝트 설명 :  
    1. 영어로 책을 읽어주고, 책과 관련된 영어 퀴즈 기능 제공
